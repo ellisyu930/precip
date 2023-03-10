@@ -1,42 +1,46 @@
+from pydantic import BaseSettings, EmailStr, SecretStr, ValidationError
+from typing import List
 import os
 
-from pydantic import BaseSettings
 
+class GlobalSettings(BaseSettings):
+    MAIL_USERNAME: EmailStr
+    MAIL_PASSWORD: SecretStr
+    MAIL_FROM: EmailStr
+    MAIL_PORT: int
+    MAIL_SERVER: str
+    MAIN_FROM_NAME: str
+    RECIPIENTS: List[EmailStr] = []
+    SCHEDULER_TIMEZONE: str
+    SCHEDULER_TYPE: str
+    SCHEDULER_HOUR: int
+    SCHEDULER_MINUTE: int
+    MISFIRE_GRACE_TIME: int
+    EXTRACTED_DAYS: int
+    TARGET_COORD_FILENAME: str
+    PSL_PRECIP_DATASETS_URL: str
 
-class Settings(BaseSettings):
-    API_BASE: str
-    DB_HOST: str
-    DB_PORT: int
-    DB_NAME: str
     TESTING: bool = False
 
+    class Config:
+        case_sensitive = False
+
+
+class DevSettings(GlobalSettings):
+    class Config:
+        env_file = "./env/.env.testing"
+
+
+class ProdSettings(GlobalSettings):
     class Config:
         env_file = "./env/.env"
 
 
-class Production(Settings):
-    API_BASE = "https://example.com/api"
-    DB_NAME = "production"
-
-
-class Testing(Settings):
-    API_BASE = "https://testing.example.com/api"
-    DB_NAME = "testing"
-
-    class Config:
-        env_file = "./env/.testing.env"
-
-
 def get_settings():
-    env = os.getenv("ENV", "TESTING")
-    if env == "PRODUCTION":
-        return Production()
-    return Testing()
-
-
-settings = get_settings()
-
-print("DB Host =", settings.DB_HOST)
-print("DB Port =", settings.DB_PORT)
-
-print("Override =", Production(TESTING=True).dict())
+    try:
+        env = os.getenv("ENVIRONMENT", "development")
+        if env == "production":
+            return ProdSettings()
+        return DevSettings()
+    except ValidationError as e:
+        print(e)
