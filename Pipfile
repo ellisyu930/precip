@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-fastapi = "*"
 pydantic = {extras = ["dotenv"], version = "*"}
+fastapi = {extras = ["all"], version = "*"}
 
 [dev-packages]
 pytest = "*"

@@ -10,7 +10,7 @@ class GlobalSettings(BaseSettings):
     MAIL_PORT: int
     MAIL_SERVER: str
     MAIN_FROM_NAME: str
-    RECIPIENTS: List[EmailStr] = []
+    RECIPIENTS: List[EmailStr]
     SCHEDULER_TIMEZONE: str
     SCHEDULER_TYPE: str
     SCHEDULER_HOUR: int
@@ -19,8 +19,6 @@ class GlobalSettings(BaseSettings):
     EXTRACTED_DAYS: int
     TARGET_COORD_FILENAME: str
     PSL_PRECIP_DATASETS_URL: str
-
-    TESTING: bool = False
 
     class Config:
         case_sensitive = False
@@ -40,7 +38,13 @@ def get_settings():
     try:
         env = os.getenv("ENVIRONMENT", "development")
         if env == "production":
-            return ProdSettings()
-        return DevSettings()
+            config = ProdSettings()
+        else:
+            config = DevSettings()
+        print(config)
+        return config
     except ValidationError as e:
         print(e)
+
+
+get_settings()
