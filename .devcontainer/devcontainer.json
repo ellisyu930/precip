@@ -1,0 +1,40 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
+{
+	"name": "Precipitation Scrapper",
+	"dockerComposeFile": "docker-compose.dev-container.yml",
+	"service": "app",
+	"shutdownAction": "stopCompose",
+	// Open the sub-folder with the source code
+	"workspaceFolder": "/workspace",
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			"settings": {
+				"python.formatting.provider": "black",
+				"editor.formatOnSave": true,
+				"python.analysis.inlayHints.functionReturnTypes": true,
+				"python.analysis.inlayHints.variableTypes": true,
+				"editor.linkedEditing": true,
+				"editor.guides.bracketPairs": true,
+				"editor.guides.bracketPairsHorizontal": true,
+				"editor.wordWrap": "on",
+				"editor.accessibilitySupport": "off",
+				"editor.suggestSelection": "first"
+			},
+			"extensions": [
+				"ms-python.python",
+				"ms-azuretools.vscode-docker"
+			]
+		}
+	},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		10331
+	]
+	// Uncomment the next line to run commands after the container is created.
+	// "postCreateCommand": "cat /etc/os-release",
+	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "devcontainer"
+}

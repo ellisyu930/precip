@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.dev
+    init: true
+    volumes:
+      # Use a named volume for the source code
+      - precip-vol:/workspace
+    container_name: precip-app
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+volumes:
+  precip-vol:
+
+

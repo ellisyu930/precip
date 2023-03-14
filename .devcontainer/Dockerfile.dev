@@ -1,0 +1,23 @@
+FROM python:3.11.1-slim-buster
+
+LABEL maintainer="Ellis Yu <ellis.yu@thisisrainbow.com>"
+
+RUN apt-get -y update \
+    && apt-get install -y \
+    git \
+    && pip install --upgrade pip \
+    && pip install pipenv 
+
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED=1
+
+# Tell pipenv to create venv in the current directory
+ENV PIPENV_VENV_IN_PROJECT=1
+
+WORKDIR /workspace
+
+
+
