@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <h1>{{location.Location}}</h1>
+    <table class="ui striped table">
+        <thead>
+            <tr>
+            <th>Date</th>
+            <th>Precipitation (mm)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in precip%}
+            <tr>
+            <td>{{row.time.values}}</td>
+            <td>{{row.values}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+{% endblock content %}
+    

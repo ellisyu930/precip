@@ -6,6 +6,8 @@ name = "pypi"
 [packages]
 pydantic = {extras = ["dotenv"], version = "*"}
 fastapi = {extras = ["all"], version = "*"}
+fastapi-mail = "*"
+apscheduler = "*"
 
 [dev-packages]
 pytest = "*"

@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <title>Precipitation</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+  </head>
+  <body>
+    <div class="ui container">
+      <h1>Locations List</h1>
+      <table class="ui striped table">
+        <thead>
+          <tr>
+            <th>Region</th>
+            <th>Location</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th class="right aligned">View</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for loc in locations.itertuples()%}
+          <tr>
+            <td>{{loc.Region}}</td>
+            <td><a href="/loc/{{loc.Index}}">{{loc.Location}}</td>
+            <td>{{loc.Lat}}</td>
+            <td>{{loc.Lon}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
