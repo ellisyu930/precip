@@ -9,7 +9,7 @@ class GlobalSettings(BaseSettings):
     MAIL_FROM: EmailStr
     MAIL_PORT: int
     MAIL_SERVER: str
-    MAIN_FROM_NAME: str
+    MAIL_FROM_NAME: str
     RECIPIENTS: List[EmailStr]
     SCHEDULER_TIMEZONE: str
     SCHEDULER_TYPE: str
@@ -34,7 +34,7 @@ class ProdSettings(GlobalSettings):
         env_file = "./env/.env"
 
 
-def get_settings():
+def get_settings() -> ProdSettings | DevSettings | None:
     try:
         env = os.getenv("ENVIRONMENT", "development")
         if env == "production":
@@ -45,6 +45,3 @@ def get_settings():
         return config
     except ValidationError as e:
         print(e)
-
-
-get_settings()
