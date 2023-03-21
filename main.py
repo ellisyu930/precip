@@ -1,13 +1,13 @@
 from fastapi import Depends, FastAPI
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 import logging
+from typing import Annotated
 from settings import get_settings, DevSettings, ProdSettings
 
 app = FastAPI()
 
 
-async def send_email():
-    settings: (ProdSettings | DevSettings | None) = Depends(get_settings)
+async def send_email(settings: (DevSettings | ProdSettings | None)):
     message = MessageSchema(
         subject="Test Email",
         recipients=settings.RECIPIENTS,
@@ -36,25 +36,12 @@ async def send_email():
 
 
 @app.get("/info")
-async def info():
-    await send_email()
+async def info(settings: (DevSettings | ProdSettings | None) = Depends(get_settings)):
+    logging.info(f"Setting: {settings}")
+    await send_email(settings=settings)
     return {"message": "Email sent!"}
 
 
 @app.get("/")
 async def root():
     return {"Hello"}
-
-
-development_db = ["DB for Development"]
-
-
-def get_db_session():
-    return development_db
-
-
-@app.get("/add-item/")
-def add_item(item: str, db=Depends(get_db_session)):
-    db.append(item)
-    print(db)
-    return {"message": f"added item {item}"}
