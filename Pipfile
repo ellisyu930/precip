@@ -8,6 +8,13 @@ pydantic = {extras = ["dotenv"], version = "*"}
 fastapi = {extras = ["all"], version = "*"}
 fastapi-mail = "*"
 apscheduler = "*"
+numpy = "*"
+pandas = "*"
+pydap = "*"
+scipy = "*"
+netcdf = "*"
+netcdf4 = "*"
+xarray = "*"
 
 [dev-packages]
 pytest = "*"
