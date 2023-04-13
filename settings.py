@@ -15,9 +15,12 @@ class GlobalSettings(BaseSettings):
     SCHEDULER_TYPE: str
     SCHEDULER_HOUR: int
     SCHEDULER_MINUTE: int
+    SCHEDULER_INT_HOURS: int
+    SCHEDULER_INT_MINUTES: int
     MISFIRE_GRACE_TIME: int
     EXTRACTED_DAYS: int
     TARGET_COORD_FILENAME: str
+    PREV_TIME_FILENAME: str
     PSL_PRECIP_DATASETS_URL: str
 
     class Config:

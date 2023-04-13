@@ -21,10 +21,37 @@ class PrecipitationData:
         self.data = None
         self.target_coords = None
 
+    def get_curr_time_value(self):
+        logger.info(self.url)
+
+        with xr.open_dataset(self.url) as ds:
+            # Select the last specified days of data
+            time_values = ds["time"].values
+            curr_time_value: np.datetime64 = time_values[-1]
+        return curr_time_value
+
+    def get_previous_time_value(self):
+        file_path = os.path.join("data", self.settings.PREV_TIME_FILENAME)
+
+        if os.path.exists(file_path):
+            with open(file_path, "r") as file:
+                prev_time_value = np.datetime64(file.read().strip())
+        else:
+            prev_time_value = np.datetime64("1970-01-01T00:00:00")
+
+        return prev_time_value
+
+    def update_previous_time_value(self, curr_time_value):
+        file_path = os.path.join("data", self.settings.PREV_TIME_FILENAME)
+
+        with open(file_path, "w") as file:
+            file.write(str(curr_time_value))
+
     def read_data(self):
         nearest_precip_data = None
 
         logger.info(self.url)
+
         with xr.open_dataset(self.url) as ds:
             # Select the last specified days of data
             last_specified_days = ds.isel(
@@ -170,7 +197,7 @@ class PrecipitationData:
             # lon_values[lon_values > 180] -= 360
         else:
             # convert from 180 to 360
-            lon_values = (lon_values + 180) % 360
+            lon_values = (lon_values) % 360
             # lon_values[lon_values < 0] += 360
 
         return lon_values

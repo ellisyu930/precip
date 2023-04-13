@@ -4,6 +4,7 @@ LABEL maintainer="Ellis Yu <ellis.yu@thisisrainbow.com>"
 
 RUN apt-get -y update \
     && apt-get install -y \
+    && apt-get install -y --no-install-recommends ca-certificates && update-ca-certificates \
     git \
     && pip install --upgrade pip \
     && pip install pipenv 
