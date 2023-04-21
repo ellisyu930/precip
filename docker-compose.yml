@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  precip-scrapper:
+    image: precip:v20230420
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - ENVIRONMENT=development
+    ports:
+      - "10332:10332"
+    tty: true
+    stdin_open: true
+    volumes:
+      # Use a named volume for the source code
+      - precip-vol:/app/data
+volumes:
+  precip-vol:

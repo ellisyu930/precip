@@ -5,13 +5,14 @@ name = "pypi"
 
 [packages]
 pydantic = {extras = ["dotenv"], version = "*"}
-fastapi = {extras = ["all"], version = "*"}
 fastapi-mail = "*"
 apscheduler = "*"
 numpy = "*"
 pandas = "*"
 netcdf4 = "*"
 xarray = "*"
+uvicorn = {extras = ["standard"], version = "*"}
+fastapi = "*"
 
 [dev-packages]
 pytest = "*"
